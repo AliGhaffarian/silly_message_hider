@@ -63,6 +63,7 @@ def handle_extract_msg():
     print(f"hidden message is {msg}")
 
 def handle_exit():
+    from sys import exit
     exit(0)
 
 menu_handler = [handle_new_keys, handle_encode_n_write_msg, handle_extract_msg, handle_exit]
@@ -75,10 +76,13 @@ menu = """\
 """
 if __name__ == "__main__":
     while True:
-        handle_load_keys()
-        menu_input = input(menu)
-        menu_handler[int(menu_input) - 1]()
-
+        try:
+            handle_load_keys()
+            menu_input = input(menu)
+            menu_handler[int(menu_input) - 1]()
+        except Exception as e:
+            print(e)
+        
         input('press enter to continue...')
         clear_screen()
-
+            
