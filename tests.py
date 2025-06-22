@@ -23,5 +23,7 @@ if __name__ == "__main__":
     test_encode('0' * 246)
     test_encode('hahha')
     test_encode('')
-    test_encode('\x21')
+    test_encode('\x21\x24')
+    test_encode('23423432' * 2048)
+    print('passed')
 
