@@ -27,7 +27,6 @@ def encrypt_message(pub_key : rsa.PublicKey, msg : bytes):
         this_chunk_content = msg[ current_offset : current_offset + max_len_to_encrypt]
 
         encrypted = rsa.encrypt(this_chunk_content, pub_key)
-
         result += encrypted
 
         encrypted_offset = current_offset + max_len_to_encrypt
@@ -44,10 +43,6 @@ def encrypt_message(pub_key : rsa.PublicKey, msg : bytes):
 
 
 def encode_msg(pub_key : rsa.PublicKey, msg : bytes, carrier : bytes):
-
-    #encrypt stuff
-    #sign_hash = rsa.sign(msg, MY_KEYS[1], SIGN_HASH_METHOD)
-    #encrypted = rsa.encrypt(msg, pub_key)
 
     trailer_offset = carrier.find(PNG_TRAILER)
     trailer_offset += len(PNG_TRAILER)
@@ -74,15 +69,11 @@ def decrypt_message_and_verify(private_key : rsa.PrivateKey, content, sender_pub
         this_chunk_content = content[ current_offset : current_offset + data_chunk_len ]
         current_offset += data_chunk_len
 
-
         decrypted = rsa.decrypt(this_chunk_content, private_key)
-        #rsa.verify(decrypted, sign, sender_pubkey)
         result += decrypted
 
 
     if current_offset < len(content):
-        #sign = content[ current_offset : current_offset + SIGN_HASH_METHOD_SIZE ]
-        #current_offset += len(sign)
         this_chunk_content = content[ current_offset : len(content) ]
         decrypted = rsa.decrypt(this_chunk_content, private_key)
         result += decrypted
@@ -94,7 +85,6 @@ def decrypt_message_and_verify(private_key : rsa.PrivateKey, content, sender_pub
 def extract_msg(private_key : rsa.PrivateKey, content, sender_pubkey : rsa.PublicKey):
     content_offset = content.find(PNG_TRAILER)
     content_offset += len(PNG_TRAILER) 
-
 
     return decrypt_message_and_verify(private_key, content[content_offset:], sender_pubkey)
 
