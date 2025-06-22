@@ -35,7 +35,7 @@ def handle_encode_n_write_msg():
     if len(out_file) == 0:
         out_file = DEFAULT_OUT_FNAME
 
-    public_key_path= input("public file name key for encryption: ")
+    public_key_path= input("receiver's publickey file : ")
     print(f"making {out_file}")
     public_key = open(public_key_path, 'rb').read()
     public_key = rsa.PublicKey.load_pkcs1(public_key)
@@ -50,7 +50,7 @@ def handle_extract_msg():
     if len(input_path) == 0:
         input_path = DEFAULT_OUT_FNAME
 
-    sender_pub_key_path = input(f"path of sender's public key: ")
+    sender_pub_key_path = input(f"sender's publickey file : ")
 
     print("extracting")
 
